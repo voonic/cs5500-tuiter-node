@@ -5,7 +5,8 @@ const TuitSchema = new mongoose.Schema({
   postedOn: { type: Date, default: Date.now },
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel'
+    ref: 'UserModel',
+    required: true,
   },
   likesCount: Number,
 }, { collection: 'tuits' });

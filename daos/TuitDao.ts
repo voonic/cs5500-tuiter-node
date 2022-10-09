@@ -6,20 +6,20 @@ export default class TuitDao implements TuitDaoI {
   async findAllTuits(): Promise<Tuit[]> {
     return await TuitModel.find();
   }
-  findTuitsByUser(uid: string): Promise<Tuit[]> {
-    throw new Error("Method not implemented.");
+  async findTuitsByUser(uid: string): Promise<Tuit[]> {
+    return await TuitModel.find({ postedBy: uid });
   }
-  findTuitById(tid: string): Promise<Tuit> {
-    throw new Error("Method not implemented.");
+  async findTuitById(tid: string): Promise<any> {
+    return await TuitModel.findById(tid);
   }
-  createTuit(tuit: Tuit): Promise<Tuit> {
-    throw new Error("Method not implemented.");
+  async createTuit(tuit: Tuit): Promise<Tuit> {
+    return await TuitModel.create(tuit);
   }
-  updateTuit(tid: string, tuit: Tuit): Promise<any> {
-    throw new Error("Method not implemented.");
+  async updateTuit(tid: string, tuit: Tuit): Promise<any> {
+    return await TuitModel.updateOne({ _id: tid }, { $set: tuit });
   }
-  deleteTuit(tid: string): Promise<any> {
-    throw new Error("Method not implemented.");
+  async deleteTuit(tid: string): Promise<any> {
+    return await TuitModel.deleteOne({ _id: tid });
   }
 
 }

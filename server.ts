@@ -3,7 +3,9 @@
  */
 import express, { Request, Response } from 'express';
 import { connect } from 'mongoose';
+import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
+import TuitDao from './daos/TuitDao';
 import UserDao from './daos/UserDao';
 const cors = require('cors')
 const app = express();
@@ -39,6 +41,9 @@ app.get('/hello', (req: Request, res: Response) =>
 
 const userDao = new UserDao();
 const userController = new UserController(app, userDao);
+
+const tuitDao = new TuitDao();
+const tuitController = new TuitController(app, tuitDao);
 
 /**
  * Start a server listening at port 4000 locally

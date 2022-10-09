@@ -1,7 +1,7 @@
 /**
  * @file Implements an Express Node HTTP server.
  */
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 const cors = require('cors')
 const app = express();
 app.use(cors());

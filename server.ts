@@ -3,10 +3,16 @@
  */
 import express, { Request, Response } from 'express';
 import { connect } from 'mongoose';
+import UserController from './controllers/UserController';
+import UserDao from './daos/UserDao';
 const cors = require('cors')
 const app = express();
+const bodyParser = require('body-parser');
 app.use(cors());
-app.use(express.json());
+//app.use(express.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 const options = {
     useNewUrlParser: true,
@@ -30,6 +36,9 @@ app.get('/', (req: Request, res: Response) =>
 
 app.get('/hello', (req: Request, res: Response) =>
     res.send('Welcome to Foundation of Software Engineering!'));
+
+const userDao = new UserDao();
+const userController = new UserController(app, userDao);
 
 /**
  * Start a server listening at port 4000 locally

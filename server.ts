@@ -3,6 +3,7 @@
  */
 import express, { Request, Response } from 'express';
 import { connect } from 'mongoose';
+import FollowController from './controllers/FollowController';
 import LikeController from './controllers/LikeController';
 import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
@@ -48,6 +49,8 @@ const tuitDao = new TuitDao();
 const tuitController = new TuitController(app, tuitDao);
 
 const likeController = LikeController.getInstance(app);
+
+const followController = FollowController.getInstance(app);
 /**
  * Start a server listening at port 4000 locally
  * but use environment variable PORT on Heroku if available.

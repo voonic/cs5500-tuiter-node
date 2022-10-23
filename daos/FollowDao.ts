@@ -23,10 +23,10 @@ export default class FollowDao implements FollowDaoI {
   }
 
   listUserFollowers = async (uid: String): Promise<User[]> => {
-    return await FollowModel.find({ following: uid });
+    return await FollowModel.find({ following: uid }).select("followedBy").populate('followedBy');
   }
 
   listUserFollowings = async (uid: String): Promise<User[]> => {
-    return await FollowModel.find({ followedBy: uid });
+    return await FollowModel.find({ followedBy: uid }).select("following").populate('following');
   }
 }

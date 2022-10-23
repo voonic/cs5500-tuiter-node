@@ -23,7 +23,6 @@ export default class FollowController implements FollowControllerI {
   followUser = (req: Request, res: Response) =>
     FollowController.followDao.followUser(req.params.uid, req.params.tuid).then(result => res.json(result));
 
-
   unfollowUser = (req: Request, res: Response) =>
     FollowController.followDao.unfollowUser(req.params.uid, req.params.tuid).then(result => res.json(result));
 

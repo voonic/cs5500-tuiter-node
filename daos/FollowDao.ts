@@ -15,18 +15,18 @@ export default class FollowDao implements FollowDaoI {
   private constructor() { }
 
   followUser = async (uid: String, tuid: string): Promise<Follow> => {
-    return await FollowModel.create({ follower: uid, following: tuid });
+    return await FollowModel.create({ followedBy: uid, following: tuid });
   }
 
   unfollowUser = async (uid: String, tuid: string): Promise<any> => {
-    return await FollowModel.deleteOne({ follower: uid, following: tuid });
+    return await FollowModel.deleteOne({ followedBy: uid, following: tuid });
   }
 
-  listUserFollowers(uid: String): Promise<User[]> {
-    throw new Error("Method not implemented.");
+  listUserFollowers = async (uid: String): Promise<User[]> => {
+    return await FollowModel.find({ following: uid });
   }
 
-  listUserFollowings(uid: String): Promise<User[]> {
-    throw new Error("Method not implemented.");
+  listUserFollowings = async (uid: String): Promise<User[]> => {
+    return await FollowModel.find({ followedBy: uid });
   }
 }

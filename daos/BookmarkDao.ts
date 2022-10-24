@@ -22,6 +22,6 @@ export default class BookmarkDao implements BookmarkDaoI {
   }
 
   listBookmarks = async (uid: String): Promise<Bookmarks[]> => {
-    return await BookmarkModel.find({ bookmarkedBy: uid });
+    return await BookmarkModel.find({ bookmarkedBy: uid }).populate("bookmarkedTuit");
   }
 }

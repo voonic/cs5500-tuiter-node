@@ -1,5 +1,6 @@
 import BookmarkDaoI from "../interfaces/BookmarkDaoI";
 import Bookmarks from "../models/Bookmarks";
+import BookmarkModel from "../mongoose/BookmarkModel";
 
 export default class BookmarkDao implements BookmarkDaoI {
   private static bookmarkDao: BookmarkDao | null = null;
@@ -12,15 +13,15 @@ export default class BookmarkDao implements BookmarkDaoI {
   }
   private constructor() { }
 
-  createBookmark(uid: String, tid: string): Promise<Bookmarks> {
-    throw new Error("Method not implemented.");
+  createBookmark = async (uid: String, tid: String): Promise<Bookmarks> => {
+    return await BookmarkModel.create({ bookmarkedBy: uid, bookmarkedTuit: tid });
   }
 
-  deleteBookmark(uid: String, tid: string): Promise<any> {
-    throw new Error("Method not implemented.");
+  deleteBookmark = async (uid: String, tid: String): Promise<any> => {
+    return await BookmarkModel.deleteOne({ bookmarkedBy: uid, bookmarkedTuit: tid });
   }
 
-  listBookmarks(uid: String): Promise<Bookmarks[]> {
-    throw new Error("Method not implemented.");
+  listBookmarks = async (uid: String): Promise<Bookmarks[]> => {
+    return await BookmarkModel.find({ bookmarkedBy: uid });
   }
 }

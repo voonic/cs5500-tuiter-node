@@ -11,8 +11,8 @@ export default class BookmarkController implements BookmarkControllerI {
     if (BookmarkController.bookmarkController === null) {
       BookmarkController.bookmarkController = new BookmarkController();
       app.post("/users/:uid/bookmarks/:tid", BookmarkController.bookmarkController.createBookmark);
-      app.delete("/users/:uid/following/:tuid", BookmarkController.bookmarkController.deleteBookmark);
-      app.get("/users/:uid/followers", BookmarkController.bookmarkController.listBookmarks);
+      app.delete("/users/:uid/bookmarks/:tid", BookmarkController.bookmarkController.deleteBookmark);
+      app.get("/users/:uid/bookmarks", BookmarkController.bookmarkController.listBookmarks);
     }
     return BookmarkController.bookmarkController;
   }

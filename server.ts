@@ -9,7 +9,6 @@ import LikeController from './controllers/LikeController';
 import MessageController from './controllers/MessageController';
 import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
-import LikeDao from './daos/LikeDao';
 import TuitDao from './daos/TuitDao';
 import UserDao from './daos/UserDao';
 const cors = require('cors')
@@ -31,6 +30,11 @@ const options = {
     family: 4
 }
 
+/**
+ * Connect function tries to connect to the mongo database
+ * on the specifed url. Prints success message on successful
+ * connection.
+ */
 connect('mongodb://localhost:27017/db', options, (err) => {
     if (err) {
         return console.error(err);
@@ -44,18 +48,24 @@ app.get('/', (req: Request, res: Response) =>
 app.get('/hello', (req: Request, res: Response) =>
     res.send('Welcome to Foundation of Software Engineering!'));
 
+// Create user dao, controller and add it to express app.
 const userDao = new UserDao();
 const userController = new UserController(app, userDao);
 
+// Create tuit dao, controller and add it to express app.
 const tuitDao = new TuitDao();
 const tuitController = new TuitController(app, tuitDao);
 
+// Create like dao, controller and add it to express app.
 const likeController = LikeController.getInstance(app);
 
+// Create follow dao, controller and add it to express app.
 const followController = FollowController.getInstance(app);
 
+// Create bookmarks dao, controller and add it to express app.
 const bookmarkController = BookmarkController.getInstance(app);
 
+// Create message dao, controller and add it to express app.
 const messageController = MessageController.getInstance(app);
 
 /**

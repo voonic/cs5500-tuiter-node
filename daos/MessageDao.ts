@@ -12,6 +12,10 @@ export default class MessageDao implements MessageDaoI {
   }
   private constructor() { }
 
+  deleteReceived = async (uid: String, mid: String): Promise<any> => {
+    return await MessageModel.deleteOne({ to: uid, _id: mid });
+  }
+
   send = async (uid: String, tuid: string, message: String): Promise<Message> => {
     return await MessageModel.create({ to: tuid, from: uid, message: message, sentOn: new Date() });
   }

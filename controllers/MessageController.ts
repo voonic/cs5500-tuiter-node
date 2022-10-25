@@ -21,7 +21,7 @@ export default class MessageController implements MessageControllerI {
   private constructor() { }
 
   send = (req: Request, res: Response) =>
-    MessageController.messageDao.send(req.params.uid, req.params.tuid, req.params.message).then(result => res.json(result));
+    MessageController.messageDao.send(req.params.uid, req.params.tuid, req.body.message).then(result => res.json(result));
 
   deleteReceived = (req: Request, res: Response) =>
     MessageController.messageDao.deleteReceived(req.params.uid, req.params.mid).then(result => res.json(result));

@@ -68,7 +68,7 @@ const bookmarkController = BookmarkController.getInstance(app);
 // Create message dao, controller and add it to express app.
 const messageController = MessageController.getInstance(app);
 
-/**
+/*
  * Start a server listening at port 4000 locally
  * but use environment variable PORT on Heroku if available.
  */

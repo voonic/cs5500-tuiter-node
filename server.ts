@@ -6,6 +6,7 @@ import { connect } from 'mongoose';
 import BookmarkController from './controllers/BookmarkController';
 import FollowController from './controllers/FollowController';
 import LikeController from './controllers/LikeController';
+import MessageController from './controllers/MessageController';
 import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
 import LikeDao from './daos/LikeDao';
@@ -54,6 +55,8 @@ const likeController = LikeController.getInstance(app);
 const followController = FollowController.getInstance(app);
 
 const bookmarkController = BookmarkController.getInstance(app);
+
+const messageController = MessageController.getInstance(app);
 
 /**
  * Start a server listening at port 4000 locally

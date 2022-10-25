@@ -1,13 +1,17 @@
 import User from "./User";
 
-export default class Tag {
-  private id: string;
-  private name: string;
-  private postedOn: Date = new Date();
-  private postedBy: User | null = null;
-  constructor(id: string, name: string, postedBy: User) {
-    this.id = id;
-    this.name = name;
-    this.postedBy = postedBy;
-  }
+/**
+ * A tag class that represents model for Tuit tag.
+ * Any tuit can be tagged with this multiple tags.
+ * 
+ * @property {String} name The name of the tag.
+ * @property {Date} postedOn The date on which it was first posted on.
+ * @property {User} postedBy The user who has created this tag.
+ * 
+ * @see User
+ */
+export default interface Tag {
+  name: string;
+  postedOn: Date;
+  postedBy: User;
 }

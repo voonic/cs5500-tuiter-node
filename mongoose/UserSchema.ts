@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
+import AccountType from "../models/AccountType";
+import MaritalStatus from "../models/MaritalStatus";
+import User from "../models/User";
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<User>({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  firstName: String,
+  firstName: { type: String, required: true },
   lastName: String,
   email: String,
   profilePhoto: String,
   headerImage: String,
-  accountType: { type: String, default: 'PERSONAL', enum: ['PERSONAL', 'ACADEMIC', 'PROFESSIONAL'] },
-  maritalStatus: { type: String, default: 'SINGLE', enum: ['MARRIED', 'SINGLE', 'WIDOWED'] },
+  accountType: { type: String, default: AccountType.Personal, enum: AccountType },
+  maritalStatus: { type: String, default: MaritalStatus.Single, enum: MaritalStatus },
   biography: String,
   dateOfBirth: Date,
   joined: { type: Date, default: Date.now },
@@ -17,8 +20,8 @@ const UserSchema = new mongoose.Schema({
     latitude: { type: Number, default: 0.0 },
     longitude: { type: Number, default: 0.0 },
   },
-  totalFollowers: Number,
-  totalPosts: Number,
+  totalFollowers: { type: Number, default: 0 },
+  totalPosts: { type: Number, default: 0 },
 }, { collection: 'users' });
 
 export default UserSchema;

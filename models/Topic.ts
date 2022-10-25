@@ -1,14 +1,19 @@
 import User from "./User";
 
-export default class Topic {
-  private id: string;
-  private name: string;
-  private postedOn: Date = new Date();
-  private postedBy: User | null = null;
-  private likesCount: Number = 0;
-  constructor(id: string, name: string, postedBy: User) {
-    this.id = id;
-    this.name = name;
-    this.postedBy = postedBy;
-  }
+/**
+ * The model class that defines Topic which can be used
+ * to attached on the Tuit. Topics are like category
+ * for a tuit. User can also see tuits belonging to certain
+ * topic.
+ * 
+ * @property {String} name The name of the topic.
+ * @property {Date} postedOn The date on which it was first posted on.
+ * @property {User} postedBy The user who has created this topic.
+ * 
+ * @see User
+ */
+export default interface Topic {
+  name: string;
+  postedOn: Date;
+  postedBy: User;
 }

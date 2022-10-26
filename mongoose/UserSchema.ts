@@ -3,6 +3,9 @@ import AccountType from "../models/AccountType";
 import MaritalStatus from "../models/MaritalStatus";
 import User from "../models/User";
 
+/**
+ * @file A user schema for user model.
+ */
 const UserSchema = new mongoose.Schema<User>({
   username: { type: String, required: true },
   password: { type: String, required: true },

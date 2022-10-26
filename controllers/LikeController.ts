@@ -40,6 +40,10 @@ export default class LikeController implements LikeControllerI {
     return LikeController.likeController;
   }
 
+  /**
+   * Private constructor because we want singleton pattern to be used
+   * for creating object of this class.
+   */
   private constructor() { }
 
   /**

@@ -1,5 +1,9 @@
 import Tuit from "../models/Tuit";
 
+/**
+ * An interface that provides common operations that
+ * can be done on the tuits collection.
+ */
 export default interface TuitDaoI {
   findAllTuits(): Promise<Tuit[]>;
   findTuitsByUser(uid: string): Promise<Tuit[]>;

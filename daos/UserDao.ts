@@ -44,6 +44,15 @@ export default class UserDao implements UserDaoI {
   }
 
   /**
+   * Deletes an existing user in the database based on the username.
+   * @param username The username for of the user being deleted.
+   * @returns The JSON object with delete count.
+   */
+  async deleteUserByUsername(username: string): Promise<any> {
+    return await UserModel.deleteMany({ username: username });
+  }
+
+  /**
    * Updates the existing user in the database.
    * @param uid The user id for the user being updated.
    * @param user The new user data in the form of request body.

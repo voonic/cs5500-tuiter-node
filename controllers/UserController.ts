@@ -19,6 +19,9 @@ import UserDaoI from "../interfaces/UserDaoI";
  *     <li>DELETE /users/:uid deletes the existing user from the database
  *      identified by the user id uid.
  *      </li>
+ *      <li>DELETE /users/username/:username/delete deletes the existing 
+ *      user from the database identified by the user name.
+ *      </li>
  * </ul>
  * @property {UserDao} userDao Singleton DAO implementing likes CRUD operations.
  * @property {Express} app Express app to add the routes.
@@ -40,6 +43,7 @@ export default class UserController implements UserControllerI {
     this.app.get('/users/:userid', this.findUserById);
     this.app.post('/users', this.createUser);
     this.app.delete('/users/:userid', this.deleteUser);
+    this.app.delete('/users/username/:username/delete', this.deleteUserByUsername);
     this.app.put('/users/:userid', this.updateUser);
   }
 
@@ -89,6 +93,10 @@ export default class UserController implements UserControllerI {
    */
   deleteUser = (req: Request, res: Response) =>
     this.userDao.deleteUser(req.params.userid)
+      .then(status => res.json(status));
+
+  deleteUserByUsername = (req: Request, res: Response) =>
+    this.userDao.deleteUserByUsername(req.params.username)
       .then(status => res.json(status));
 
   /**

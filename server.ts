@@ -16,7 +16,7 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(cors());
 //app.use(express.json());
-app.use(bodyParser.json()); // <--- Here
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const options = {

@@ -95,6 +95,15 @@ export default class UserController implements UserControllerI {
     this.userDao.deleteUser(req.params.userid)
       .then(status => res.json(status));
 
+  /**
+   * Deletes an existing user in the database based on the
+   * username provided.
+   * 
+   * @param {Request} req Represents request from client, representing
+   * a specific user by uid.
+   * @param {Response} res Represents response to client, including the
+   * body formatted as JSON object with delete count.
+   */
   deleteUserByUsername = (req: Request, res: Response) =>
     this.userDao.deleteUserByUsername(req.params.username)
       .then(status => res.json(status));

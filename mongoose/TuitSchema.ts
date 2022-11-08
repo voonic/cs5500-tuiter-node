@@ -12,7 +12,7 @@ const TuitSchema = new mongoose.Schema<Tuit>({
     ref: 'UserModel',
     required: true,
   },
-  likesCount: Number,
+  likesCount: { type: Number, default: 0 },
 }, { collection: 'tuits' });
 
 export default TuitSchema;

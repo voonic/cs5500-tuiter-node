@@ -12,9 +12,23 @@ import UserController from './controllers/UserController';
 import TuitDao from './daos/TuitDao';
 import UserDao from './daos/UserDao';
 const cors = require('cors')
+const session = require("express-session");
 const app = express();
+let sess = {
+    secret: process.env.SECRET,
+    cookie: {
+        secure: false
+    }
+}
+
+if (process.env.ENV === 'PRODUCTION') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
+
 const bodyParser = require('body-parser');
 app.use(cors());
+app.use(session(sess));
 //app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

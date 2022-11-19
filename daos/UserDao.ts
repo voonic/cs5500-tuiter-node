@@ -9,6 +9,14 @@ import UserDaoI from "../interfaces/UserDaoI";
 export default class UserDao implements UserDaoI {
 
   /**
+   * Finds the user based on the username
+   * @param username The user id of the user
+   */
+  async findUserByUsername(username: string): Promise<any> {
+    return await UserModel.findOne({ username: username });
+  }
+
+  /**
    * Lists all the users in the system.
    * @returns List of user object.
    */

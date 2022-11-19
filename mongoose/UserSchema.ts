@@ -9,7 +9,7 @@ import User from "../models/User";
 const UserSchema = new mongoose.Schema<User>({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  firstName: { type: String, required: true },
+  firstName: { type: String },
   lastName: String,
   email: String,
   profilePhoto: String,

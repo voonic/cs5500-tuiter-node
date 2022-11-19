@@ -3,6 +3,7 @@
  */
 import express, { Request, Response } from 'express';
 import { connect } from 'mongoose';
+import AuthenticationController from './controllers/auth-controller';
 import BookmarkController from './controllers/BookmarkController';
 import FollowController from './controllers/FollowController';
 import LikeController from './controllers/LikeController';
@@ -25,9 +26,9 @@ if (process.env.ENV === 'PRODUCTION') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies
 }
-
+console.log(process.env.SECRET);
 const bodyParser = require('body-parser');
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(session(sess));
 //app.use(express.json());
 app.use(bodyParser.json());
@@ -60,6 +61,8 @@ app.get('/', (req: Request, res: Response) =>
 
 app.get('/hello', (req: Request, res: Response) =>
     res.send('Welcome to Foundation of Software Engineering!'));
+
+AuthenticationController(app);
 
 // Create user dao, controller and add it to express app.
 const userDao = new UserDao();

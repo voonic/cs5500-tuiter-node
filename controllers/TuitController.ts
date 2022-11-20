@@ -41,7 +41,7 @@ export default class TuitController implements TuitControllerI {
     this.tuitDao = tuitDao;
     this.app.get('/tuits', this.findAllTuits);
     this.app.get('/tuits/:tid', this.findTuitById);
-    this.app.get('/users/:userid/tuits', this.findTuitsByUser);
+    this.app.get('/users/:uid/tuits', this.findTuitsByUser);
     this.app.post('/tuits', this.createTuit);
     this.app.put('/tuits/:tid', this.updateTuit);
     this.app.delete('/tuits/:tid', this.deleteTuit);
@@ -64,7 +64,9 @@ export default class TuitController implements TuitControllerI {
    * @param {Response} res Represents response to client, including the
    * body formatted as JSON Object of the tuit.
    */
-  findTuitById = (req: Request, res: Response) => this.tuitDao.findTuitById(req.params.tid).then(tuit => res.json(tuit));
+  findTuitById = async (req: Request, res: Response) => {
+    return this.tuitDao.findTuitById(req.params.tid).then(tuit => res.json(tuit));
+  };
 
   /**
    * List all the tuits made by a user in the database.
@@ -74,7 +76,11 @@ export default class TuitController implements TuitControllerI {
    * @param {Response} res Represents response to client, including the
    * body formatted as JSON Array of all the tuits made by the user.
    */
-  findTuitsByUser = (req: Request, res: Response) => this.tuitDao.findTuitsByUser(req.params.userid).then(tuits => res.json(tuits));
+  findTuitsByUser = async (req: Request, res: Response) => {
+    //@ts-ignore
+    let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+    return this.tuitDao.findTuitsByUser(userId).then(tuits => res.json(tuits));
+  }
 
   /**
    * Create a new tuit in the database.
@@ -84,7 +90,16 @@ export default class TuitController implements TuitControllerI {
    * @param {Response} res Represents response to client, including the
    * body formatted as JSON Object of the new tuit saved.
    */
-  createTuit = (req: Request, res: Response) => this.tuitDao.createTuit(req.body).then(tuit => res.json(tuit));
+  createTuit = async (req: Request, res: Response) => {
+    let tuit = req.body;
+    //@ts-ignore
+    let userId = req.body.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.body.uid;
+    tuit.postedBy = userId;
+    console.log(tuit);
+    //@ts-ignore
+    console.log(req.session['profile']);
+    return this.tuitDao.createTuit(tuit).then(tuit => res.json(tuit));
+  }
 
   /**
    * Updates an existing tuit in the database.

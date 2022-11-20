@@ -26,7 +26,6 @@ if (process.env.ENV === 'PRODUCTION') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies
 }
-console.log(process.env.SECRET);
 const bodyParser = require('body-parser');
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(session(sess));

@@ -26,7 +26,7 @@ const AuthenticationController = (app: Express) => {
     const password = newUser.password;
     const hash = await bcrypt.hash(password, saltRounds);
     newUser.password = hash;
-
+    newUser.profilePhoto = "nasa.png";
     const existingUser = await userDao
       .findUserByUsername(req.body.username);
     if (existingUser) {

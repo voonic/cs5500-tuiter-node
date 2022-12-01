@@ -1,6 +1,4 @@
 import { Express, Request, Response } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 import LikeDao from "../daos/LikeDao";
 import LikeControllerI from "../interfaces/LikeControllerI";
 import LikeDaoI from "../interfaces/LikeDaoI";
@@ -12,6 +10,8 @@ import LikeDaoI from "../interfaces/LikeDaoI";
  *     <li>GET /api/users/:uid/likes to retrieve all the tuits liked by a user
  *     </li>
  *     <li>GET /api/tuits/:tid/likes to retrieve all users that liked a tuit
+ *     </li>
+ *      <li>GET /api/users/:uid/likesdata/:tid to retrieve like object by loggedin user.
  *     </li>
  *    <li>POST /api/users/:uid/togglelikes/:tid to record that a user toggles likes for a tuit
  *     </li>
@@ -34,6 +34,7 @@ export default class LikeController implements LikeControllerI {
       LikeController.likeController = new LikeController();
       app.get("/users/:uid/likes", LikeController.likeController.findAllTuitsLikedByUser);
       app.get("/tuits/:tid/likes", LikeController.likeController.findAllUsersThatLikedTuit);
+      app.get("/users/:uid/likedata/:tid", LikeController.likeController.getTuitLikedObject);
       app.post("/users/:uid/togglelikes/:tid", LikeController.likeController.userTogglesLike);
       app.post("/users/:uid/toggledislikes/:tid", LikeController.likeController.userTogglesDislike);
     }
@@ -81,14 +82,28 @@ export default class LikeController implements LikeControllerI {
       .then(likes => res.json(likes));
 
   /**
-* @param {Request} req Represents request from client, including the
-* path parameters uid and tid representing the user that is toggling likes for the tuit
-* and the tuit being liked
-* @param {Response} res Represents response to client, including the
-* body formatted as JSON containing the new likes that was inserted in the
-* database
-*/
+  * @param {Request} req Represents request from client, including the
+  * path parameters uid and tid representing the user that is toggling likes for the tuit
+  * and the tuit being liked
+  * @param {Response} res Represents response to client, including the
+  * body formatted as JSON containing the new likes that was inserted in the
+  * database
+  */
   userTogglesDislike = (req: Request, res: Response) =>
     LikeController.likeDao.userTogglesDislike(req.params.tid, req.params.uid)
       .then(likes => res.json(likes));
+
+  /**
+  * Fetches whether user liked or disliked this tuit.
+  *  
+  * @param {Request} req Represents request from client, including the
+  * path parameters uid and tid representing the user that is toggling likes for the tuit
+  * and the tuit being liked
+  * @param {Response} res Represents response to client, including the
+  * body formatted as JSON containing the new likes that was inserted in the
+  * database
+  */
+  getTuitLikedObject = (req: Request, res: Response) =>
+    LikeController.likeDao.getTuitLikedObject(req.params.tid, req.params.uid)
+      .then(result => res.json(result));
 };

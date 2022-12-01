@@ -9,4 +9,5 @@ export default interface LikeControllerI {
   findAllTuitsLikedByUser(req: Request, res: Response): void;
   userTogglesLike(req: Request, res: Response): void;
   userTogglesDislike(req: Request, res: Response): void;
+  getTuitLikedObject(req: Request, res: Response): void;
 };

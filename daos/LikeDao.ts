@@ -52,6 +52,14 @@ export default class LikeDao implements LikeDaoI {
       .exec();
 
   /**
+   * Find if this tuit is liked or disliked by user.
+   * 
+   * @param uid The userid for which like entry is fetched
+   * @returns Like object
+   */
+  getTuitLikedObject = async (tid: string, uid: string): Promise<Like | null> => LikeModel.findOne({ tuit: tid, likedBy: uid });
+
+  /**
    * A toggle behaviour for liking a tuit.
    * When it is liked it will add user in likes collection for that tuit.
    * If liked again then it will delete that.

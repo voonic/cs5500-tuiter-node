@@ -18,6 +18,7 @@ export default interface Tuit {
   postedOn: Date;
   postedBy: User;
   likes: Number;
+  dislikes: Number;
   replies: Number;
   retuits: Number;
 }

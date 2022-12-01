@@ -77,7 +77,7 @@ export default class LikeController implements LikeControllerI {
    * database
    */
   userLikesTuit = (req: Request, res: Response) =>
-    LikeController.likeDao.userLikesTuit(req.params.uid, req.params.tid)
+    LikeController.likeDao.userLikesTuit(req.params.tid, req.params.uid)
       .then(likes => res.json(likes));
 
   /**
@@ -88,6 +88,6 @@ export default class LikeController implements LikeControllerI {
    * on whether deleting the like was successful or not
    */
   userUnlikesTuit = (req: Request, res: Response) =>
-    LikeController.likeDao.userUnlikesTuit(req.params.uid, req.params.tid)
+    LikeController.likeDao.userUnlikesTuit(req.params.tid, req.params.uid)
       .then(status => res.send(status));
 };

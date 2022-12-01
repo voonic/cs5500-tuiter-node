@@ -1,6 +1,7 @@
 import LikeDaoI from "../interfaces/LikeDaoI";
 import Like from "../models/Likes";
 import LikeModel from "../mongoose/LikeModel";
+import TuitModel from "../mongoose/TuitModel";
 
 /**
  * @class The class which is responsible for CRUD operations
@@ -57,15 +58,23 @@ export default class LikeDao implements LikeDaoI {
    * @param tid The tuit being liked.
    * @returns the like object.
    */
-  userLikesTuit = async (uid: string, tid: string): Promise<any> =>
-    LikeModel.create({ tuit: tid, likedBy: uid });
+  userLikesTuit = async (tid: string, uid: string): Promise<any> => {
+    const likeObj = await LikeModel.create({ tuit: tid, likedBy: uid });
+    await TuitModel.updateOne({ _id: tid }, { $inc: { likes: 1 } });
+    await likeObj.populate("tuit");
+    return likeObj;
+  }
+
 
   /**
    * Removes the entry of user liking a tuit.
    * @param uid The user who is liking the tuit.
    * @param tid The tuit id that is being unliked.
-   * @returns Json object with delete count
+   * @returns Tuit object with updated likes count.
    */
-  userUnlikesTuit = async (uid: string, tid: string): Promise<any> =>
-    LikeModel.deleteOne({ tuit: tid, likedBy: uid });
+  userUnlikesTuit = async (tid: string, uid: string): Promise<any> => {
+    await LikeModel.deleteOne({ tuit: tid, likedBy: uid });
+    await TuitModel.updateOne({ _id: tid }, { $inc: { likes: -1 } });
+    const tuit = await TuitModel.findById(tid);
+  }
 }

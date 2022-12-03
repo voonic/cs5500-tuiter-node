@@ -9,6 +9,8 @@ import LikeDaoI from "../interfaces/LikeDaoI";
  * <ul>
  *     <li>GET /api/users/:uid/likes to retrieve all the tuits liked by a user
  *     </li>
+ *      <li>GET /api/users/:uid/dislikes to retrieve all the tuits disliked by a user
+ *     </li>
  *     <li>GET /api/tuits/:tid/likes to retrieve all users that liked a tuit
  *     </li>
  *      <li>GET /api/users/:uid/likesdata/:tid to retrieve like object by loggedin user.
@@ -33,6 +35,7 @@ export default class LikeController implements LikeControllerI {
     if (LikeController.likeController === null) {
       LikeController.likeController = new LikeController();
       app.get("/users/:uid/likes", LikeController.likeController.findAllTuitsLikedByUser);
+      app.get("/users/:uid/dislikes", LikeController.likeController.findAllTuitsDislikedByUser);
       app.get("/tuits/:tid/likes", LikeController.likeController.findAllUsersThatLikedTuit);
       app.get("/users/:uid/likedata/:tid", LikeController.likeController.getTuitLikedObject);
       app.post("/users/:uid/togglelikes/:tid", LikeController.likeController.userTogglesLike);

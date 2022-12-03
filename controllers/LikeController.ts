@@ -59,7 +59,7 @@ export default class LikeController implements LikeControllerI {
       .then(likes => res.json(likes));
 
   /**
-   * Retrieves all tuits liked by a user from the database
+   * Retrieves all tuits liked by a user from the database.
    * @param {Request} req Represents request from client, including the path
    * parameter uid representing the user liked the tuits
    * @param {Response} res Represents response to client, including the
@@ -67,6 +67,18 @@ export default class LikeController implements LikeControllerI {
    */
   findAllTuitsLikedByUser = (req: Request, res: Response) =>
     LikeController.likeDao.findAllTuitsLikedByUser(req.params.uid)
+      .then(likes => res.json(likes));
+
+
+  /**
+   * Retrieves all tuits disliked by a user from the database.
+   * @param {Request} req Represents request from client, including the path
+   * parameter uid representing the user liked the tuits
+   * @param {Response} res Represents response to client, including the
+   * body formatted as JSON arrays containing the tuit objects that were liked
+   */
+  findAllTuitsDislikedByUser = (req: Request, res: Response) =>
+    LikeController.likeDao.findAllTuitsDislikedByUser(req.params.uid)
       .then(likes => res.json(likes));
 
   /**

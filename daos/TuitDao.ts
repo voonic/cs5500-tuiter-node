@@ -15,8 +15,7 @@ export default class TuitDao implements TuitDaoI {
    * @returns A promise that resolves to array of tuits.
    */
   async findAllTuits(): Promise<Tuit[]> {
-    let tuits = await TuitModel.find().populate("postedBy");
-    return await TuitModel.find().populate("postedBy");
+    return await TuitModel.find().populate("postedBy").exec();
   }
 
   /**

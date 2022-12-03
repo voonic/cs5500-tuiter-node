@@ -12,7 +12,7 @@ import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
 import TuitDao from './daos/TuitDao';
 import UserDao from './daos/UserDao';
-const cors = require('cors')
+const cors = require('cors');
 const session = require("express-session");
 const app = express();
 let sess = {
@@ -29,7 +29,6 @@ if (process.env.ENV === 'PRODUCTION') {
 const bodyParser = require('body-parser');
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(session(sess));
-//app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

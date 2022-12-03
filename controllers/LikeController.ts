@@ -11,10 +11,10 @@ import LikeDaoI from "../interfaces/LikeDaoI";
  *     </li>
  *     <li>GET /api/tuits/:tid/likes to retrieve all users that liked a tuit
  *     </li>
- *     <li>POST /api/users/:uid/likes/:tid to record that a user likes a tuit
+ *      <li>GET /api/users/:uid/likesdata/:tid to retrieve like object by loggedin user.
  *     </li>
- *     <li>DELETE /api/users/:uid/unlikes/:tid to record that a user
- *     no londer likes a tuit</li>
+ *    <li>POST /api/users/:uid/togglelikes/:tid to record that a user toggles likes for a tuit
+ *     </li>
  * </ul>
  * @property {LikeDao} likeDao Singleton DAO implementing likes CRUD operations
  * @property {LikeController} LikeController Singleton controller implementing
@@ -34,8 +34,9 @@ export default class LikeController implements LikeControllerI {
       LikeController.likeController = new LikeController();
       app.get("/users/:uid/likes", LikeController.likeController.findAllTuitsLikedByUser);
       app.get("/tuits/:tid/likes", LikeController.likeController.findAllUsersThatLikedTuit);
-      app.post("/users/:uid/likes/:tid", LikeController.likeController.userLikesTuit);
-      app.delete("/users/:uid/unlikes/:tid", LikeController.likeController.userUnlikesTuit);
+      app.get("/users/:uid/likedata/:tid", LikeController.likeController.getTuitLikedObject);
+      app.post("/users/:uid/togglelikes/:tid", LikeController.likeController.userTogglesLike);
+      app.post("/users/:uid/toggledislikes/:tid", LikeController.likeController.userTogglesDislike);
     }
     return LikeController.likeController;
   }
@@ -70,24 +71,39 @@ export default class LikeController implements LikeControllerI {
 
   /**
    * @param {Request} req Represents request from client, including the
-   * path parameters uid and tid representing the user that is liking the tuit
+   * path parameters uid and tid representing the user that is toggling likes for the tuit
    * and the tuit being liked
    * @param {Response} res Represents response to client, including the
    * body formatted as JSON containing the new likes that was inserted in the
    * database
    */
-  userLikesTuit = (req: Request, res: Response) =>
-    LikeController.likeDao.userLikesTuit(req.params.uid, req.params.tid)
+  userTogglesLike = (req: Request, res: Response) =>
+    LikeController.likeDao.userTogglesLike(req.params.tid, req.params.uid)
       .then(likes => res.json(likes));
 
   /**
-   * @param {Request} req Represents request from client, including the
-   * path parameters uid and tid representing the user that is unliking
-   * the tuit and the tuit being unliked
-   * @param {Response} res Represents response to client, including status
-   * on whether deleting the like was successful or not
-   */
-  userUnlikesTuit = (req: Request, res: Response) =>
-    LikeController.likeDao.userUnlikesTuit(req.params.uid, req.params.tid)
-      .then(status => res.send(status));
+  * @param {Request} req Represents request from client, including the
+  * path parameters uid and tid representing the user that is toggling likes for the tuit
+  * and the tuit being liked
+  * @param {Response} res Represents response to client, including the
+  * body formatted as JSON containing the new likes that was inserted in the
+  * database
+  */
+  userTogglesDislike = (req: Request, res: Response) =>
+    LikeController.likeDao.userTogglesDislike(req.params.tid, req.params.uid)
+      .then(likes => res.json(likes));
+
+  /**
+  * Fetches whether user liked or disliked this tuit.
+  *  
+  * @param {Request} req Represents request from client, including the
+  * path parameters uid and tid representing the user that is toggling likes for the tuit
+  * and the tuit being liked
+  * @param {Response} res Represents response to client, including the
+  * body formatted as JSON containing the new likes that was inserted in the
+  * database
+  */
+  getTuitLikedObject = (req: Request, res: Response) =>
+    LikeController.likeDao.getTuitLikedObject(req.params.tid, req.params.uid)
+      .then(result => res.json(result));
 };

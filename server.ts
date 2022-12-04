@@ -16,7 +16,7 @@ const cors = require('cors');
 const session = require("express-session");
 const app = express();
 let sess = {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "CS5500",
     cookie: {
         secure: false
     }

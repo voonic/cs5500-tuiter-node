@@ -47,7 +47,7 @@ export default class LikeDao implements LikeDaoI {
    */
   findAllTuitsLikedByUser = async (uid: string): Promise<Like[]> =>
     LikeModel
-      .find({ likedBy: uid, type: true })
+      .find({ likedBy: uid, tuit: { $ne: null }, type: true })
       .populate({
         path: "tuit",
         populate: {
@@ -65,7 +65,7 @@ export default class LikeDao implements LikeDaoI {
    */
   findAllTuitsDislikedByUser = async (uid: string): Promise<Like[]> =>
     LikeModel
-      .find({ likedBy: uid, type: false })
+      .find({ likedBy: uid, tuit: { $ne: null }, type: false })
       .populate({
         path: "tuit",
         populate: {

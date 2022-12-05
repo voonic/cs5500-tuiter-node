@@ -1,5 +1,6 @@
 import TuitDaoI from "../interfaces/TuitDaoI";
 import Tuit from "../models/Tuit";
+import LikeModel from "../mongoose/LikeModel";
 import TuitModel from "../mongoose/TuitModel";
 
 /**
@@ -15,8 +16,7 @@ export default class TuitDao implements TuitDaoI {
    * @returns A promise that resolves to array of tuits.
    */
   async findAllTuits(): Promise<Tuit[]> {
-    let tuits = await TuitModel.find().populate("postedBy");
-    return await TuitModel.find().populate("postedBy");
+    return await TuitModel.find().populate("postedBy").exec();
   }
 
   /**
@@ -62,7 +62,10 @@ export default class TuitDao implements TuitDaoI {
    * @returns The JSON object with the delete count.
    */
   async deleteTuit(tid: string): Promise<any> {
-    return await TuitModel.deleteOne({ _id: tid });
+    // delete dao must delete the entry in the likes schema
+    let result = await TuitModel.deleteOne({ _id: tid });
+    await LikeModel.deleteMany({ tuit: tid });
+    return result;
   }
 
 }

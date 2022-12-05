@@ -43,13 +43,38 @@ export default class LikeDao implements LikeDaoI {
    * Find all the tuits that is liked by a user.
    * 
    * @param uid The userid for which the all tuits needs to be fetched.
-   * @returns Array of like object populated with tuit object.
+   * @returns Array of like objects, populated with tuit.
    */
   findAllTuitsLikedByUser = async (uid: string): Promise<Like[]> =>
     LikeModel
-      .find({ likedBy: uid })
-      .populate("tuit")
+      .find({ likedBy: uid, tuit: { $ne: null }, type: true })
+      .populate({
+        path: "tuit",
+        populate: {
+          path: 'postedBy',
+          model: 'UserModel'
+        }
+      })
       .exec();
+
+  /**
+   * Find all the tuits that is liked by a user.
+   * 
+   * @param uid The userid for which the all tuits needs to be fetched.
+   * @returns Array of like objects, populated with tuit.
+   */
+  findAllTuitsDislikedByUser = async (uid: string): Promise<Like[]> =>
+    LikeModel
+      .find({ likedBy: uid, tuit: { $ne: null }, type: false })
+      .populate({
+        path: "tuit",
+        populate: {
+          path: 'postedBy',
+          model: 'UserModel'
+        }
+      })
+      .exec();
+
 
   /**
    * Find if this tuit is liked or disliked by user.

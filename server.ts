@@ -12,11 +12,11 @@ import TuitController from './controllers/TuitController';
 import UserController from './controllers/UserController';
 import TuitDao from './daos/TuitDao';
 import UserDao from './daos/UserDao';
-const cors = require('cors')
+const cors = require('cors');
 const session = require("express-session");
 const app = express();
 let sess = {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "CS5500",
     cookie: {
         secure: false
     }
@@ -29,7 +29,6 @@ if (process.env.ENV === 'PRODUCTION') {
 const bodyParser = require('body-parser');
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(session(sess));
-//app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -48,7 +47,8 @@ const options = {
  * on the specifed url. Prints success message on successful
  * connection.
  */
-connect('mongodb://localhost:27017/db', options, (err) => {
+//connect('mongodb://localhost:27017/db', options, (err) => {
+connect('mongodb+srv://dbuser:i1Iqm0dx5wBGkGuw@cluster0.kemis0p.mongodb.net/?retryWrites=true&w=majority', options, (err) => {
     if (err) {
         return console.error(err);
     }

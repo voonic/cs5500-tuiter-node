@@ -47,7 +47,8 @@ const options = {
  * on the specifed url. Prints success message on successful
  * connection.
  */
-connect('mongodb://localhost:27017/db', options, (err) => {
+//connect('mongodb://localhost:27017/db', options, (err) => {
+connect('mongodb+srv://dbuser:i1Iqm0dx5wBGkGuw@cluster0.kemis0p.mongodb.net/?retryWrites=true&w=majority', options, (err) => {
     if (err) {
         return console.error(err);
     }

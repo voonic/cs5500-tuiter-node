@@ -95,9 +95,7 @@ export default class TuitController implements TuitControllerI {
     //@ts-ignore
     let userId = req.body.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.body.uid;
     tuit.postedBy = userId;
-    console.log(tuit);
     //@ts-ignore
-    console.log(req.session['profile']);
     return this.tuitDao.createTuit(tuit).then(tuit => res.json(tuit));
   }
 

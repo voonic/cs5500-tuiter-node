@@ -27,7 +27,7 @@ if (process.env.ENV === 'PRODUCTION') {
     sess.cookie.secure = true // serve secure cookies
 }
 const bodyParser = require('body-parser');
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: 'https://cs5500-a4.netlify.app' }));
 app.use(session(sess));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node build/server.js",
-    "build": "npm install && tsc --project ./",
+    "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
     "dev": "nodemon server.ts"
